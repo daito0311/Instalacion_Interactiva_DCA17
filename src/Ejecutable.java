@@ -25,11 +25,17 @@ size(1200, 800);
 	
 	@Override
 	public void draw() {
+		background(255);
+	log.pintar(this);
 
-	log.pintar();
 	
 	}
 	
+	@Override
+	public void mousePressed() {
+		log.press();
+		
+	}
 	
 
 }
