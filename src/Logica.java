@@ -1,18 +1,26 @@
+import java.util.ArrayList;
+
 import com.sun.javafx.font.directwrite.RECT;
 
 import javafx.scene.layout.Background;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Logica {
 
 	
 	private int pantallas;
-	PApplet app;
+	private PApplet app;
+	private ArrayList <Elemento> elementos;
+	private PImage banda;
+	
 	
 	
 	public Logica(PApplet app) {
 		this.app = app;
 	this.pantallas = 0;	
+	banda = app.loadImage("../data/banda.png");
+	
 		
 		
 	}
@@ -49,7 +57,7 @@ public class Logica {
 			
 			// PANTALLA DE JUEGO 1  (JUEGO DE LA BANDA GUITAR HERO DONDE BAJAN LOS ELEMENTOS)
 		case 2:
-			
+			app.image(banda, 0, 0, 1280, 720);
 			
 			
 			
@@ -76,6 +84,17 @@ public class Logica {
 
 		
 		
+	}
+
+	public void key() {
+
+		if ( app.key == 'a' || app.key  == 'A') {
+			
+			elementos.add(new Elemento(app.mouseX, app.mouseY, 50, 50,	(int) app.random(9)));
+				
+			
+			
+		}
 	}
 
 }

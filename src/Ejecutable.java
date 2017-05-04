@@ -37,5 +37,13 @@ size(1200, 800);
 		
 	}
 	
+	@Override
+	public void keyPressed() {
+
+	log.key();
+	
+	
+	}
+	
 
 }
