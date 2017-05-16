@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Logica {
-
+	// holi
 	PApplet app;
 
 	Cerdito cerditoPaja;

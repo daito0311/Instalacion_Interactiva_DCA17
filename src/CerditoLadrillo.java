@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class CerditoLadrillo extends Cerdito {
-
+	// holi
 	public CerditoLadrillo(PApplet app) {
 		super(app);
 		x = ((app.width / 6) * 5)-100;

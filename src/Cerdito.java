@@ -12,7 +12,7 @@ public abstract class Cerdito {
 	protected int tamanox, tamanoy, desfaseT;
 	protected PApplet app;
 	protected boolean agarrado;
-
+// holi
 
 
 	

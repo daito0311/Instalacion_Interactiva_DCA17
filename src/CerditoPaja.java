@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class CerditoPaja extends Cerdito {
-
+	// holi
 	public CerditoPaja(PApplet app) {
 		super(app);
 		// TODO Auto-generated constructor stub

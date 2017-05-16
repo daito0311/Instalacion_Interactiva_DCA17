@@ -5,7 +5,7 @@ public class Pantalla {
 	PImage pantalla;
 	PImage pantalla1;
 	PImage pantalla2;
-	
+	// holi	
 	int pantallas;
 	PApplet app;
 	Logica logica;
