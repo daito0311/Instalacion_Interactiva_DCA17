@@ -7,14 +7,22 @@ public class Logica {
 	PImage pantalla0;
 	PImage pantalla1;
 	PImage pantalla2;
+	PImage pantalla3;
 	Cerdito cerditoPaja;
 	Cerdito cerditoMadera;
 	Cerdito cerditoLadrillo;
+	Cerdito cerditoRunnerPaja;
+	Cerdito cerditoRunnerLadrillo;
+	Cerdito cerditoRunnerMadera;
 	Cerdito cel;
 	PImage cerca;
+	PImage[] cerca2;
+	int numActualCerca;
 	int xtempo;
 	int ytempo;
 	int pantallas;
+	int cerditoEnJuego;// variable para saber que cerdito esta jugando, 0=paja,
+						// 1=madera, 2 =ladrillo
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -41,11 +49,26 @@ public class Logica {
 
 			app.imageMode(app.CORNER);
 			app.image(cerca, 0, 0, 800, 600);
+			System.out.println(cerditoEnJuego);
 
 		}
 		if (pantallas == 3) {
 			// ------------------------------------Runner
-			app.background(255);
+			app.background(pantalla3);
+			imagenes();
+
+			if (cerditoEnJuego == 0) {
+				cerditoRunnerPaja.display();
+			}
+
+			if (cerditoEnJuego == 1) {
+				cerditoRunnerMadera.display();
+			}
+
+			if (cerditoEnJuego == 2) {
+				cerditoRunnerLadrillo.display();
+			}
+
 		}
 		if (pantallas == 4) {
 			// ------------------------------------Lo que sea 3
@@ -65,7 +88,6 @@ public class Logica {
 		if (pantallas == 2) {
 			// ------------------------------------seleccion Personajes
 			seleccionCerditoPressed();
-			
 
 		}
 		if (pantallas == 3) {
@@ -77,7 +99,6 @@ public class Logica {
 
 		}
 	}
-
 
 	public void mouseDr() {
 
@@ -117,7 +138,6 @@ public class Logica {
 			// ------------------------------------seleccion Personajes
 			seleccionCerditoRelease();
 
-
 		}
 		if (pantallas == 3) {
 			// ------------------------------------Runner
@@ -129,8 +149,6 @@ public class Logica {
 		}
 
 	}
-
-	
 
 	public void keyP() {
 		if (app.keyCode == 'A') {
@@ -144,6 +162,24 @@ public class Logica {
 		return PApplet.dist(posx, posy, posx2, posy2) < 90;
 	}
 
+	public void imagenes() {
+		app.imageMode(app.CENTER);
+		app.image(cerca2[numActualCerca], app.width / 6, app.height / 2);
+		if (app.frameCount % 2 == 0) {
+			numActualCerca++;
+			if (numActualCerca >= cerca2.length) {
+				numActualCerca = 0;
+			}
+		}
+		app.image(cerca2[numActualCerca], (app.width / 6) * 5, app.height / 2);
+		if (app.frameCount % 3 == 0) {
+			numActualCerca++;
+			if (numActualCerca >= cerca2.length) {
+				numActualCerca = 0;
+			}
+		}
+	}
+
 	public void inicializar() {
 		// ------------------------------------imagenes
 
@@ -151,10 +187,21 @@ public class Logica {
 		pantalla0 = app.loadImage("Pantalla0.png");
 		pantalla1 = app.loadImage("Pantalla1.png");
 		pantalla2 = app.loadImage("Pantalla2.png");
+		pantalla3 = app.loadImage("Pantalla3.png");
+
+		cerca2 = new PImage[8];
+		for (int l = 0; l < cerca2.length; l++) {
+			cerca2[l] = app.loadImage("cerca-0" + (l + 1) + ".png");
+			System.out.println(l + 1);
+		}
+
 		// ------------------------------------cerditos
 		cerditoPaja = new CerditoPaja(app);
 		cerditoMadera = new CerditoMadera(app);
 		cerditoLadrillo = new CerditoLadrillo(app);
+		cerditoRunnerPaja = new CerditoRunnerPaja(app);
+		cerditoRunnerMadera = new CerditoRunnerMadera(app);
+		cerditoRunnerLadrillo = new CerditoRunnerLadrillo(app);
 		// ------------------------------------imagenes
 		pantallas = 0;
 	}
@@ -179,9 +226,9 @@ public class Logica {
 			cerditoLadrillo.setAgarrado(true);
 			cel = cerditoLadrillo;
 		}
-		
+
 	}
-	
+
 	private void seleccionCerditoRelease() {
 		if (cel != null) {
 
@@ -245,9 +292,8 @@ public class Logica {
 			cerditoLadrillo.setAgarrado(false);
 			cerditoMadera.setAgarrado(false);
 		}
-		
-	}
 
+	}
 
 	public void organizarCerditos() {
 		int xt = (app.width / 2) - 30;
@@ -260,6 +306,20 @@ public class Logica {
 			cerditoMadera.display();
 			cerditoPaja.display();
 			cerditoLadrillo.display();
+
+			if (cerditoPaja.getX() == xt && cerditoPaja.getY() == yt) {
+				cerditoEnJuego = 0;
+
+			}
+			if (cerditoMadera.getX() == xt && cerditoPaja.getY() == yt) {
+
+				cerditoEnJuego = 1;
+
+			}
+			if (cerditoLadrillo.getX() == xt && cerditoPaja.getY() == yt) {
+				cerditoEnJuego = 2;
+
+			}
 		}
 		if (cel != null) {
 			if (cerditoPaja.getX() == xt && cerditoPaja.getY() == yt) {
@@ -275,6 +335,7 @@ public class Logica {
 				cerditoPaja.display();
 				cerditoLadrillo.display();
 				cerditoMadera.display();
+				cerditoEnJuego = 1;
 
 			}
 			if (cerditoLadrillo.getX() == xt && cerditoPaja.getY() == yt) {
@@ -283,6 +344,7 @@ public class Logica {
 				cerditoPaja.display();
 				cerditoMadera.display();
 				cerditoLadrillo.display();
+				cerditoEnJuego = 2;
 
 			}
 
