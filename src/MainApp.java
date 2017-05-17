@@ -11,7 +11,7 @@ public class MainApp extends PApplet {
 
 	@Override
 	public void settings() {
-		size(1200, 700);
+		size(800, 600);
 //		fullScreen();
 	}
 

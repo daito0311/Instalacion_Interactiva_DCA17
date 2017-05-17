@@ -40,7 +40,7 @@ public class Logica {
 			organizarCerditos();
 
 			app.imageMode(app.CORNER);
-			app.image(cerca, 0, 0, 1200, 700);
+			app.image(cerca, 0, 0, 800, 600);
 
 		}
 		if (pantallas == 3) {
