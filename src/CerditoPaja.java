@@ -75,7 +75,7 @@ public class CerditoPaja extends Cerdito {
 			}
 			app.fill(0, 255, 255);
 		}
-		app.ellipse(x, y, 30, 30);
+		
 
 	}
 

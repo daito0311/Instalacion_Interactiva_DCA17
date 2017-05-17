@@ -4,50 +4,91 @@ import processing.core.PImage;
 public class Logica {
 	// holi
 	PApplet app;
-
+	PImage pantalla0;
+	PImage pantalla1;
+	PImage pantalla2;
 	Cerdito cerditoPaja;
 	Cerdito cerditoMadera;
 	Cerdito cerditoLadrillo;
-	Pantalla pantalla;
 	Cerdito cel;
 	PImage cerca;
 	int xtempo;
 	int ytempo;
 	int pantallas;
 
-
 	public Logica(PApplet app) {
 		this.app = app;
-		cerca  = app.loadImage("Pantalla1-2-10.png");
-		pantalla = new Pantalla(app, this);
+		cerca = app.loadImage("Pantalla1-2-10.png");
+		pantalla0 = app.loadImage("Pantalla0.png");
+		pantalla1 = app.loadImage("Pantalla1.png");
+		pantalla2 = app.loadImage("Pantalla2.png");
 		cerditoPaja = new CerditoPaja(app);
 		cerditoMadera = new CerditoMadera(app);
 		cerditoLadrillo = new CerditoLadrillo(app);
 		pantallas = 0;
-		
+
 	}
 
 	public void display() {
-//		pantalla.display();
 		if (pantallas == 0) {
 			// ------------------------------------intro
-			app.background(255);
+			app.background(pantalla0);
+
 		}
 		if (pantallas == 1) {
 			// ------------------------------------niveles
-			app.background(255);
+			app.background(pantalla1);
 		}
 		if (pantallas == 2) {
 			// ------------------------------------seleccion Personajes
 			app.noStroke();
-			app.background(255);
-			
-			
-			cerditoPaja.display();
-			cerditoLadrillo.display();
-			cerditoMadera.display();
+			app.background(pantalla2);
+			int xt = (app.width / 2) - 30;
+			int yt = (int) ((app.height / 3) * 2.3);
+
+			if (cerditoPaja.getY() == ((app.height / 3) * 2) + 30
+					|| cerditoLadrillo.getY() == ((app.height / 3) * 2) + 30
+					|| cerditoMadera.getY() == (app.height / 3) * 2) {
+				app.imageMode(app.CENTER);
+
+				cerditoMadera.display();
+				cerditoPaja.display();
+				cerditoLadrillo.display();
+			}
+			if (cel != null) {
+				if (cerditoPaja.getX() == xt && cerditoPaja.getY() == yt) {
+					app.imageMode(app.CENTER);
+					
+					cerditoLadrillo.display();
+					cerditoMadera.display();
+					cerditoPaja.display();
+				}
+				if (cerditoMadera.getX() == xt && cerditoPaja.getY() == yt) {
+					app.imageMode(app.CENTER);
+				
+					cerditoPaja.display();
+					cerditoLadrillo.display();
+					cerditoMadera.display();
+
+				}
+				if (cerditoLadrillo.getX() == xt && cerditoPaja.getY() == yt) {
+					app.imageMode(app.CENTER);
+					
+					
+					cerditoPaja.display();
+					cerditoMadera.display();
+					cerditoLadrillo.display();
+
+				}
+
+			} else {
+				app.imageMode(app.CENTER);
+
+			}
+
 			app.imageMode(app.CORNER);
-//			app.image(cerca, 0, 0, 1200, 700);
+			app.image(cerca, 0, 0, 1200, 700);
+			
 
 		}
 		if (pantallas == 3) {
@@ -140,44 +181,54 @@ public class Logica {
 
 			if (cel != null) {
 
-				if (validarDistancia(app.mouseX, app.mouseY, app.width / 2, app.height / 2)) {
-					
+				if (validarDistancia(app.mouseX, app.mouseY, app.width / 2, (app.height / 4)*3)) {
+
 					if (cel == cerditoPaja) {
-						
-						
-						if (cerditoMadera.getY() == app.height / 2) {
-							cerditoMadera.setX((app.width / 6) * 3);
-							cerditoMadera.setY((app.height / 3) * 2);
-						}
-						if (cerditoLadrillo.getY() == app.height / 2) {
-							cerditoLadrillo.setX((app.width / 6) * 5);
-							cerditoLadrillo.setY((app.height / 3) * 2);
-						}
+
+						cerditoMadera.setX((app.width / 6) * 3);
+						cerditoMadera.setY((app.height / 3) * 2);
+
+						cerditoLadrillo.setX(((app.width / 6) * 5) - 100);
+						cerditoLadrillo.setY(((app.height / 3) * 2) + 30);
+
+						cerditoMadera.setTamanox(97);
+						cerditoMadera.setTamanoy(140);
+
+						cerditoLadrillo.setTamanox(97);
+						cerditoLadrillo.setTamanoy(140);
 					}
 					if (cel == cerditoMadera) {
 
-						if (cerditoPaja.getY() == app.height / 2) {
-							cerditoPaja.setX((app.width / 6) * 1);
-							cerditoPaja.setY((app.height / 3) * 2);
-						}
-						if (cerditoLadrillo.getY() == app.height / 2) {
-							cerditoLadrillo.setX((app.width / 6) * 5);
-							cerditoLadrillo.setY((app.height / 3) * 2);
-						}
+						cerditoPaja.setX(((app.width / 6) * 1) + 100);
+						cerditoPaja.setY(((app.height / 3) * 2) + 30);
+
+						cerditoLadrillo.setX(((app.width / 6) * 5) - 100);
+						cerditoLadrillo.setY(((app.height / 3) * 2) + 30);
+
+						cerditoPaja.setTamanox(97);
+						cerditoPaja.setTamanoy(140);
+
+						cerditoLadrillo.setTamanox(97);
+						cerditoLadrillo.setTamanoy(140);
+
 					}
 					if (cel == cerditoLadrillo) {
 
-						if (cerditoPaja.getY() == app.height / 2) {
-							cerditoPaja.setX((app.width / 6) * 1);
-							cerditoPaja.setY((app.height / 3) * 2);
-						}
-						if (cerditoMadera.getY() == app.height / 2) {
-							cerditoMadera.setX((app.width / 6) * 3);
-							cerditoMadera.setY((app.height / 3) * 2);
-						}
+						cerditoPaja.setX(((app.width / 6) * 1) + 100);
+						cerditoPaja.setY(((app.height / 3) * 2) + 30);
+
+						cerditoMadera.setX((app.width / 6) * 3);
+						cerditoMadera.setY((app.height / 3) * 2);
+
+						cerditoPaja.setTamanox(97);
+						cerditoPaja.setTamanoy(140);
+
+						cerditoMadera.setTamanox(97);
+						cerditoMadera.setTamanoy(140);
+
 					}
-					cel.setX(app.width / 2);
-					cel.setY((int)((app.height / 3) * 2.3));
+					cel.setX((app.width / 2) - 30);
+					cel.setY((int) ((app.height / 3) * 2.3));
 					cel.setTamanox(152);
 					cel.setTamanoy(220);
 				} else {
@@ -190,7 +241,7 @@ public class Logica {
 				cerditoLadrillo.setAgarrado(false);
 				cerditoMadera.setAgarrado(false);
 			}
-			
+
 		}
 		if (pantallas == 3) {
 			// ------------------------------------Runner
@@ -212,7 +263,7 @@ public class Logica {
 
 	// --------------------------------------------------------Otros Métodos
 	public boolean validarDistancia(int posx, int posy, int posx2, int posy2) {
-		return PApplet.dist(posx, posy, posx2, posy2) < 50;
+		return PApplet.dist(posx, posy, posx2, posy2) < 90;
 	}
 
 	public int getPantallas() {
@@ -223,5 +274,4 @@ public class Logica {
 		this.pantallas = pantallas;
 	}
 
-	
 }
