@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Logica {
-	// holi
+	
 	PApplet app;
 	PImage pantalla0, pantalla1 ,pantalla2, pantalla3;
 	PImage cerca;
@@ -14,8 +14,9 @@ public class Logica {
 	int pantallas;
 	int cerditoEnJuego;
 	private ArrayList <Cerdito> cerditos;
-	// variable para saber que cerdito esta jugando, 0=paja,
-						// 1=madera, 2 =ladrillo
+	private Cerdito selCerdo;
+
+	
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -38,7 +39,11 @@ public class Logica {
 			}
 			
 		}
+	
+	for (int i = 0; i < cerditos.size(); i++) {
+		cerditos.get(i).cargarimagencerdos(app);
 		
+	}
 	}
 	
 	
@@ -53,9 +58,12 @@ public class Logica {
 		pantalla3 = app.loadImage("Pantalla3.png");
 
 		
+		
+		}
+		
 	
 		
-	}
+	
 
 	
 	
@@ -111,6 +119,22 @@ if (app.mouseX > 290 && app.mouseX < 440 && app.mouseY > 478 && app.mouseY < 530
 	
 }
 
+
+if (pantallas ==2) {
+	
+	
+	
+	for (int i = 0; i<this.cerditos.size(); i++) {
+		if (cerditos.get(i).validar(app.mouseX, app.mouseY)) {
+			this.selCerdo = this.cerditos.get(i);
+			
+		
+			break;
+		}
+	}
+	
+}
+
 	}
 
 	
@@ -124,7 +148,32 @@ if (app.mouseX > 290 && app.mouseX < 440 && app.mouseY > 478 && app.mouseY < 530
 		}
 		
 	}
+	
+public void drag(int mouseX, int mouseY) {
+	
+	// ARRASTRAR LOS CERDOS EN LA PANTALLA 2 
+	
+	if (pantallas ==2) {
+		
+	
+		if (this.selCerdo!= null) {
+			this.selCerdo.mover(mouseX, mouseY);
+		}
+		
+	}
+	
+		
+	}
 
+
+
+public void release(int mouseX, int mouseY) {
+	
+	
+	this.selCerdo = null;
+
+		
+	}
 
 
 

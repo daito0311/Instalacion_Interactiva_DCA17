@@ -29,11 +29,11 @@ public class MainApp extends PApplet {
 	}
 	
 	public void mouseDragged(){
-		
+		logica.drag(mouseX, mouseY);
 	}
 	
 	public void mouseReleased(){
-		
+		logica.release(mouseX, mouseY);
 	}
 	public void keyPressed(){
 	logica.key();
