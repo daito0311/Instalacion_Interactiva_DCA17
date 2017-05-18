@@ -21,21 +21,21 @@ public class MainApp extends PApplet {
 	}
 	
 	public void draw(){
-		logica.display();
+		logica.pintar();
 	}
 	
 	public void mousePressed(){
-		logica.mouseP();
+	logica.pressed();
 	}
 	
 	public void mouseDragged(){
-		logica.mouseDr();
+		
 	}
 	
 	public void mouseReleased(){
-		logica.mouseRe();
+		
 	}
 	public void keyPressed(){
-		logica.keyP();
+	logica.key();
 	}
 }
