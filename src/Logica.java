@@ -22,6 +22,23 @@ public class Logica {
 		inicializar();
 		cerditos = new ArrayList <Cerdito> ();
 
+
+		// CREAR LOS CERDITOS EN EL JUEGO
+	for (int i = 0; i < 3; i++) {
+			
+			if (i == 0) {
+				cerditos.add(new Cerdito (185, 200, 50, 50, 1));
+				
+			} else if (i == 1) {
+				cerditos.add(new Cerdito (385, 200, 50, 50, 2));
+				
+			}else if (i == 2) {
+				cerditos.add(new Cerdito (585, 200, 50, 50, 3));
+				
+			}
+			
+		}
+		
 	}
 	
 	
@@ -36,7 +53,7 @@ public class Logica {
 		pantalla3 = app.loadImage("Pantalla3.png");
 
 		
-		
+	
 		
 	}
 
@@ -61,6 +78,10 @@ public class Logica {
 			app.noStroke();
 			app.background(pantalla2);
 			
+			for (int i = 0; i < cerditos.size(); i++) {
+				cerditos.get(i).pintar(app);
+				
+			}
 
 			
 			
@@ -82,8 +103,7 @@ public class Logica {
 	
 	public void pressed() {
 		
-System.out.println(pantallas);
-System.out.println(app.mouseY);
+
 
 if (app.mouseX > 290 && app.mouseX < 440 && app.mouseY > 478 && app.mouseY < 530 && pantallas == 1) {
 	
@@ -104,6 +124,10 @@ if (app.mouseX > 290 && app.mouseX < 440 && app.mouseY > 478 && app.mouseY < 530
 		}
 		
 	}
+
+
+
+
 
 	
 }
