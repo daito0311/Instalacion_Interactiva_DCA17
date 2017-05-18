@@ -1,9 +1,12 @@
 import java.util.ArrayList;
-
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 
 public class Logica {
+
+	
+	
 
 	PApplet app;
 	PImage pantalla0, pantalla1, pantalla2, pantalla3;
@@ -19,11 +22,13 @@ public class Logica {
 	private boolean yaestaelcerdo;
 
 	public Logica(PApplet app) {
+		
+		
 		this.app = app;
 		yaestaelcerdo = false;
 		inicializar();
 		cerditos = new ArrayList<Cerdito>();
-		runner = new Runner(app.width / 2, 540, 50, 50, 1);
+		runner = new Runner(app.width / 2, 450, 50, 50, 1);
 
 		// CREAR LOS CERDITOS EN EL JUEGO
 		for (int i = 0; i < 3; i++) {
@@ -45,6 +50,8 @@ public class Logica {
 			cerditos.get(i).cargarimagencerdos(app);
 
 		}
+		
+		runner.cargarimagenes(app);
 	}
 
 	public void inicializar() {
@@ -60,6 +67,8 @@ public class Logica {
 
 	public void pintar() {
 
+		
+	
 		if (pantallas == 0) {
 			// ------------------------------------intro
 			app.background(pantalla0);
@@ -104,6 +113,8 @@ public class Logica {
 
 			runner.pintar(app);
 
+			
+			
 		}
 		if (pantallas == 4) {
 			// ------------------------------------Lo que sea 3
@@ -111,6 +122,8 @@ public class Logica {
 		}
 
 	}
+
+
 
 	public void pressed() {
 
