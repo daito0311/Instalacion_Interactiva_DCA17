@@ -10,16 +10,20 @@ public class Logica {
 
 	PApplet app;
 	PImage pantalla0, pantalla1, pantalla2, pantalla3;
-	PImage cerca;
+	PImage cerca, vida, madera, ladrillo, paja;
 	float numCercas;
 	int xtempo;
 	int ytempo;
-	int pantallas;
+	public int pantallas;
 	int cerditoEnJuego;
 	private ArrayList<Cerdito> cerditos;
-	private Runner runner;
+	private ArrayList <Elemento> elementos;
+	Runner runner;
 	private Cerdito selCerdo;
 	private boolean yaestaelcerdo;
+	private int cantpaja, cantmadera, cantladrillo;
+	private Elemento borrador;
+
 
 	public Logica(PApplet app) {
 		
@@ -28,6 +32,7 @@ public class Logica {
 		yaestaelcerdo = false;
 		inicializar();
 		cerditos = new ArrayList<Cerdito>();
+		elementos = new ArrayList <Elemento>();
 		runner = new Runner(app.width / 2, 450, 50, 50, 1);
 
 		// CREAR LOS CERDITOS EN EL JUEGO
@@ -51,6 +56,10 @@ public class Logica {
 
 		}
 		
+	
+		
+		
+		
 		runner.cargarimagenes(app);
 	}
 
@@ -62,12 +71,19 @@ public class Logica {
 		pantalla1 = app.loadImage("Pantalla1.png");
 		pantalla2 = app.loadImage("Pantalla2.png");
 		pantalla3 = app.loadImage("Pantalla3.png");
+		
+		vida = app.loadImage("../data/vida.png");
+		madera = app.loadImage("../data/Elemento-02.png");
+		paja = app.loadImage("../data/Elemento-03.png");
+		ladrillo = app.loadImage("../data/Elemento-01.png");
+		
 
 	}
 
 	public void pintar() {
 
-		
+		creadorElementos();
+		eliminadordeElementos();
 	
 		if (pantallas == 0) {
 			// ------------------------------------intro
@@ -110,8 +126,29 @@ public class Logica {
 			// ------------------------------------Runner
 
 			app.background(pantalla3);
-
+			
+			for (int i = 0; i < elementos.size(); i++) {
+				elementos.get(i).pintar(app);
+				elementos.get(i).mover();
+			}
+			app.textSize(36);
+			app.fill(0,0,0,97);
+			app.rect(-10,0,144,310);
+			
+			app.image(paja, 40,40, 143/3,143/3);
+			app.fill(0);
+			app.text("x"+ cantpaja, 65, 50);
+			app.image(madera, 40, 100, 143/3,143/3);
+			app.text("x"+ cantmadera, 65, 110);
+			app.image(ladrillo, 40, 160, 143/3,143/3);
+			app.text("x"+ cantladrillo, 65, 170);
+			
+			app.text("Vidas" , 15, 250);
+			app.text("x "+ runner.getVidas(), 35, 290); 			
+			app.textSize(12);
 			runner.pintar(app);
+			
+			
 
 			
 			
@@ -124,6 +161,117 @@ public class Logica {
 	}
 
 
+
+private void creadorElementos() {
+	
+	// OBSTACULOS 
+	
+if (app.frameCount %250 == 0) {
+	
+		
+		elementos.add(new Elemento (app.random(135+25,568-25), 10, 50,50, 0));
+	
+		
+	}
+	
+	
+	
+	
+	// ELEMENTOS PAJA
+	if (app.frameCount %220 == 0) {
+	
+		
+		elementos.add(new Elemento (app.random(135+25,568-25), 10, 50,50, 1));
+	
+		
+	}
+	
+	// MADERA 
+	if (app.frameCount %400 == 0) {
+	
+		
+		elementos.add(new Elemento (app.random(135+25,568-25), 10, 50,50, 2));
+	
+		
+	}
+	
+ // LADRILLO
+	if (app.frameCount %900 == 0) {
+	
+		
+		elementos.add(new Elemento (app.random(135+25,568-25), 10, 50,50, 3));
+	
+		
+	}
+		
+	}
+
+
+private void eliminadordeElementos() {
+	for (int i = 0; i < elementos.size(); i++) {
+		if (elementos.get(i).getPosY()>600) {
+			borrador = elementos.get(i);
+		
+			
+			
+			
+		}
+		else if (app.dist(runner.getPosX(), runner.getPosY(), elementos.get(i).getPosX(), elementos.get(i).getPosY())<20) {
+		borrador = elementos.get(i);
+		
+		switch (elementos.get(i).getTipo()) {
+		case 1:
+			cantpaja++;
+			break;
+
+		case 2:
+			cantmadera++;
+			break;
+			
+		case 3:
+			cantladrillo++;
+			break;
+		}
+		}
+		
+		else if (app.dist(runner.getPosX(), runner.getPosY(), elementos.get(i).getPosX(), elementos.get(i).getPosY())<30) {
+			borrador = elementos.get(i);  
+			
+			if (elementos.get(i).getTipo()==0) {
+				runner.quitarvida();
+				
+			}
+		}
+		
+	}
+	elementos.remove(borrador);
+	borrador = null;
+}
+
+public void pressedLeap(float leapX, float leapY) {
+	
+	if (pantallas == 2) {
+
+		// validar la posicion de los cerditos
+
+		for (int i = 0; i < this.cerditos.size(); i++) {
+			if (cerditos.get(i).validar(leapX, leapY)) {
+				this.selCerdo = this.cerditos.get(i);
+
+				break;
+			}
+		}
+
+		// PASAR A JUGAR RUNNER
+
+		if (yaestaelcerdo == true && leapY > 530 && leapY < 580 && leapX > 330 && leapX < 430) {
+			pantallas++;
+
+			cerditos.removeAll(cerditos);
+
+		}
+	}
+}
 
 	public void pressed() {
 
@@ -162,11 +310,7 @@ public class Logica {
 
 	}
 
-	public void CrearCerdo(int mouseX, int mouseY) {
-		this.cerditos.add(new Cerdito(app.width / 2, 200, 50, 50, 2));
-
-	}
-
+	
 	public void key() {
 
 		// PANTALLAS DEL COMIENZO
@@ -185,12 +329,48 @@ public class Logica {
 
 			if (this.selCerdo != null) {
 				this.selCerdo.mover(mouseX, mouseY);
+				
 			}
 
 		}
+		
+		
 
 		// PANTALLA 3 RUNNER
 
+	}
+	
+	public void dragLeap(float leapX, float leapY){
+	
+		if (pantallas == 2) {
+
+			if (this.selCerdo != null) {
+				this.selCerdo.moverLeap(leapX, leapY);
+				
+			}	
+		
+		}
+	}
+	
+	
+	public void releaseLeap(float leapX, float leapY) {
+		// SOLTAR LOS CERDOS EN LA PANTALLA 2
+
+				if (pantallas == 2 && selCerdo != null) {
+
+					if (selCerdo.getPosX() > 380 - 50 && selCerdo.getPosX() < 380 + 50 && selCerdo.getPosY() > 400
+							&& selCerdo.getPosY() < 440) {
+						yaestaelcerdo = true;
+						runner.setTipo(selCerdo.getTipo());
+					} else {
+						yaestaelcerdo = false;
+					}
+				}
+
+				this.selCerdo = null;
+
+				// PANTALLA 3 RUNNER
+		
 	}
 
 	public void release(int mouseX, int mouseY) {
@@ -214,4 +394,25 @@ public class Logica {
 
 	}
 
+	public ArrayList<Cerdito> getCerditos() {
+		return cerditos;
+	}
+
+	public void setCerditos(ArrayList<Cerdito> cerditos) {
+		this.cerditos = cerditos;
+	}
+
+	public int getPantallas() {
+		return pantallas;
+	}
+
+	public void setPantallas(int pantallas) {
+		this.pantallas = pantallas;
+	}
+	
+	
+	
+
+	
+	
 }

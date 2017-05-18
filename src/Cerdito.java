@@ -51,9 +51,9 @@ public class Cerdito {
 		cerdoPaja = app.loadImage("../data/Paja-01.png");
 	}
 
-	public boolean validar(int lx, int ly) {
+	public boolean validar(float leapX, float leapY) {
 
-		if (lx > posX - 30 && lx < posX + 30 && ly > posY - 60 && ly < posY + 60) {
+		if (leapX > posX - 30 && leapX < posX + 30 && leapY > posY - 60 && leapY < posY + 60) {
 
 			System.out.println("ENTRO");
 			return true;
@@ -63,6 +63,12 @@ public class Cerdito {
 	}
 
 	public void mover(int x, int y) {
+		this.posX = x;
+		this.posY = y;
+
+	}
+	
+	public void moverLeap(float x, float y) {
 		this.posX = x;
 		this.posY = y;
 
