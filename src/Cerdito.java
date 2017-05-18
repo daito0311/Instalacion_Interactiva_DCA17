@@ -6,8 +6,7 @@ public class Cerdito {
 	public float posX, posY;
 	private int tipo;
 	private float ancho, alto;
-	private PImage cerdoPaja, cerdoLeña, cerdoLadrillo;
-	private boolean corredor;
+	private PImage cerdoPaja, cerdoLena, cerdoLadrillo;
 
 	public Cerdito(float posX, float posY, float ancho, float alto, int tipo) {
 
@@ -23,36 +22,23 @@ public class Cerdito {
 		switch (tipo) {
 		case 1:
 
-			if (corredor) {
-
-			} else {
-
-				app.imageMode(app.CENTER);
-				app.image(cerdoPaja, posX, posY, 203 / 2, 292 / 2);
-			}
+			app.imageMode(app.CENTER);
+			app.image(cerdoPaja, posX, posY, 203 / 2, 292 / 2);
 
 			break;
 
 		case 2:
 
-			if (corredor) {
+			app.imageMode(app.CENTER);
+			app.image(cerdoLena, posX, posY, 203 / 2, 292 / 2);
 
-			} else {
-
-				app.imageMode(app.CENTER);
-				app.image(cerdoLeña, posX, posY, 203 / 2, 292 / 2);
-			}
 			break;
 
 		case 3:
 
-			if (corredor) {
+			app.imageMode(app.CENTER);
+			app.image(cerdoLadrillo, posX, posY, 203 / 2, 292 / 2);
 
-			} else {
-
-				app.imageMode(app.CENTER);
-				app.image(cerdoLadrillo, posX, posY, 203 / 2, 292 / 2);
-			}
 			break;
 		}
 
@@ -61,7 +47,7 @@ public class Cerdito {
 	public void cargarimagencerdos(PApplet app) {
 
 		cerdoLadrillo = app.loadImage("../data/Ladrillo-01.png");
-		cerdoLeña = app.loadImage("../data/Madera-01.png");
+		cerdoLena = app.loadImage("../data/Madera-01.png");
 		cerdoPaja = app.loadImage("../data/Paja-01.png");
 	}
 
