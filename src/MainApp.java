@@ -3,6 +3,7 @@ import de.voidplus.leapmotion.Finger;
 import de.voidplus.leapmotion.Hand;
 import de.voidplus.leapmotion.LeapMotion;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 public class MainApp extends PApplet {
@@ -15,6 +16,7 @@ public class MainApp extends PApplet {
 	PApplet app;
 	LeapMotion leap;
 	int pantallasLeap;
+	PImage guante1, guante2;
 	private Cerdito selCerdo;
 
 	@Override
@@ -27,11 +29,15 @@ public class MainApp extends PApplet {
 	public void setup() {
 		logica = new Logica(this);
 		leap = new LeapMotion(this);
+		
+		guante1 = loadImage("../data/guante-02.png");
+		guante2 = loadImage("../data/guante-03.png");
 	}
 
 	public void draw() {
 		logica.pintar();
 
+		System.out.println(pantallasLeap);
 		int fps = leap.getFrameRate();
 		for (Hand hand : leap.getHands()) {
 
@@ -41,6 +47,14 @@ public class MainApp extends PApplet {
 				pantallasLeap = logica.getPantallas();
 
 				if (pantallasLeap == 2) {
+					
+					
+					if (hand.getPinchStrength()>0.7) {
+						image(guante2, hand.getIndexFinger().getPosition().x, hand.getIndexFinger().getPosition().y, 1259/9, 1443/9);
+					}else {
+						image(guante1, hand.getIndexFinger().getPosition().x, hand.getIndexFinger().getPosition().y, 1259/9, 1443/9);
+						
+					}
 
 					logica.pressedLeap(hand.getIndexFinger().getPosition().x, hand.getIndexFinger().getPosition().y);
 
@@ -73,10 +87,24 @@ public class MainApp extends PApplet {
 					if (hand.getPosition().x > 165 && hand.getPosition().x < 640) {
 						logica.runner.mover(hand.getPosition().x);
 
+						
 					}
+					
+					if (hand.getPosition().x >680 && hand.getPosition().y > 40 && hand.getPosition().y<200 && hand.getGrabStrength() > 0.7) {
+						
+						logica.construircasapaja();
+					}else if (hand.getPosition().x >680 && hand.getPosition().y > 240 && hand.getPosition().y<400 && hand.getGrabStrength() > 0.7) {
+						logica.construircasamadera();
+					}else if (hand.getPosition().x >680 && hand.getPosition().y > 440 && hand.getPosition().y<600 && hand.getGrabStrength() > 0.7) {
+						logica.construircasaLadrillos();
+					}
+					
+					
+					
 
 					// RUNER
 
+					
 				}
 
 			} // finaliza hand is right
@@ -104,7 +132,7 @@ public class MainApp extends PApplet {
 
 			// --------------------------------------------------
 			// Drawing
-			hand.draw();
+			//hand.draw();
 
 			// ==================================================
 			// 3. Arm

@@ -97,7 +97,7 @@ public class Runner {
 
 	public void quitarvida() {
 		vidas--;
-		posY +=15;
+		
 		
 	}
 
