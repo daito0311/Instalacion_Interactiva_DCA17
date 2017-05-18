@@ -7,6 +7,7 @@ public class Cerdito {
 	private int tipo;
 	private float ancho, alto;
 	private PImage cerdoPaja, cerdoLeña, cerdoLadrillo;
+	private boolean corredor;
 
 	public Cerdito(float posX, float posY, float ancho, float alto, int tipo) {
 
@@ -21,29 +22,37 @@ public class Cerdito {
 
 		switch (tipo) {
 		case 1:
-			app.fill(255, 0, 0);
 
-			app.imageMode(app.CENTER);
-			app.image(cerdoPaja, posX, posY, 203 / 2, 292 / 2);
-			
+			if (corredor) {
+
+			} else {
+
+				app.imageMode(app.CENTER);
+				app.image(cerdoPaja, posX, posY, 203 / 2, 292 / 2);
+			}
+
 			break;
 
 		case 2:
 
-			app.fill(0, 255, 0);
+			if (corredor) {
 
-			app.imageMode(app.CENTER);
-			app.image(cerdoLeña, posX, posY, 203 / 2, 292 / 2);
-		
+			} else {
+
+				app.imageMode(app.CENTER);
+				app.image(cerdoLeña, posX, posY, 203 / 2, 292 / 2);
+			}
 			break;
 
 		case 3:
 
-			app.fill(0, 0, 255);
+			if (corredor) {
 
-			app.imageMode(app.CENTER);
-			app.image(cerdoLadrillo, posX, posY, 203 / 2, 292 / 2);
-	
+			} else {
+
+				app.imageMode(app.CENTER);
+				app.image(cerdoLadrillo, posX, posY, 203 / 2, 292 / 2);
+			}
 			break;
 		}
 
@@ -58,19 +67,19 @@ public class Cerdito {
 
 	public boolean validar(int lx, int ly) {
 
-		if (lx > posX - 30 && lx < posX + 30  && ly > posY-60 && ly < posY+60) {
-			
-			System.out.println( "ENTRO");
+		if (lx > posX - 30 && lx < posX + 30 && ly > posY - 60 && ly < posY + 60) {
+
+			System.out.println("ENTRO");
 			return true;
 		}
 		return false;
 
 	}
-	
-	public void mover (int x, int y){
+
+	public void mover(int x, int y) {
 		this.posX = x;
 		this.posY = y;
-		
+
 	}
 
 	public float getPosX() {
@@ -112,8 +121,5 @@ public class Cerdito {
 	public void setAlto(float alto) {
 		this.alto = alto;
 	}
-	
-	
-	
-	
+
 }

@@ -15,11 +15,14 @@ public class Logica {
 	int cerditoEnJuego;
 	private ArrayList <Cerdito> cerditos;
 	private Cerdito selCerdo;
+	private boolean yaestaelcerdo;
+	private int numtipocerdo;
 
 	
 
 	public Logica(PApplet app) {
 		this.app = app;
+		yaestaelcerdo = false;
 		inicializar();
 		cerditos = new ArrayList <Cerdito> ();
 
@@ -86,17 +89,43 @@ public class Logica {
 			app.noStroke();
 			app.background(pantalla2);
 			
+			
+			app.ellipse(app.width/2-20, 500, 100, 40);
+
 			for (int i = 0; i < cerditos.size(); i++) {
 				cerditos.get(i).pintar(app);
 				
 			}
-
+			app.fill(0,0,0, 97);
+			app.rect(60, 15, 700, 80);
+			app.fill(255);
+			app.textSize(30);
+			app.text("Selecciona el cerdito que prefieras y", 90, 50);
+			app.text("Colocalo en el circulo blanco para jugar", 90, 80);
+			
+			
+			if (yaestaelcerdo) {
+				
+				app.fill(0,0,0, 97);
+				app.rect(380-60, 530, 120, 50);
+				app.fill(255);
+				app.textSize(40);
+				app.text("Jugar", 380-50, 565);
+			}
 			
 			
 			
 		}
 		if (pantallas == 3) {
 			// ------------------------------------Runner
+			
+			app.background(pantalla3);
+			
+			
+			
+			
+			
+			
 			
 		}
 		if (pantallas == 4) {
@@ -111,6 +140,8 @@ public class Logica {
 	
 	public void pressed() {
 		
+		
+		
 
 
 if (app.mouseX > 290 && app.mouseX < 440 && app.mouseY > 478 && app.mouseY < 530 && pantallas == 1) {
@@ -124,6 +155,8 @@ if (pantallas ==2) {
 	
 	
 	
+	// validar la posicion de los cerditos
+	
 	for (int i = 0; i<this.cerditos.size(); i++) {
 		if (cerditos.get(i).validar(app.mouseX, app.mouseY)) {
 			this.selCerdo = this.cerditos.get(i);
@@ -133,13 +166,26 @@ if (pantallas ==2) {
 		}
 	}
 	
+	// PASAR A JUGAR RUNNER
+	
+	if (yaestaelcerdo ==true && app.mouseY > 530 && app.mouseY < 580 && app.mouseX > 330 && app.mouseX <430) {
+		pantallas++;
+		
+	}
 }
+
+
+
+// PANTALLA 3 RUNNER 
+
+
 
 	}
 
 	
 	public void key() {
 		
+		// PANTALLAS DEL COMIENZO 
 		if (app.keyCode == app.ENTER && pantallas==0) {
 			pantallas++;
 			
@@ -162,6 +208,8 @@ public void drag(int mouseX, int mouseY) {
 		
 	}
 	
+	// PANTALLA 3 RUNNER 
+	
 		
 	}
 
@@ -169,8 +217,24 @@ public void drag(int mouseX, int mouseY) {
 
 public void release(int mouseX, int mouseY) {
 	
+	// SOLTAR LOS CERDOS EN LA PANTALLA 2
+	
+if (pantallas == 2 && selCerdo != null) {
+		
+		if(selCerdo.getPosX()> 380-50 && selCerdo.getPosX() < 380+50 && selCerdo.getPosY()>400 && selCerdo.getPosY()<440) { 
+			numtipocerdo = selCerdo.getTipo();
+			yaestaelcerdo=true;
+		} else {
+			yaestaelcerdo=false;
+		}
+}
 	
 	this.selCerdo = null;
+	
+	
+	
+	// PANTALLA 3 RUNNER 
+	
 
 		
 	}
